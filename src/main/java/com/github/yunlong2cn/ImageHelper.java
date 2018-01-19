@@ -27,7 +27,7 @@ public class ImageHelper {
 
     }
 
-    public static double sim(Color src, Color dest) {
+    public static double distance(Color src, Color dest) {
         int r = Math.abs(src.getRed() - dest.getRed());
         int g = Math.abs(src.getGreen() - dest.getGreen());
         int b = Math.abs(src.getBlue() - dest.getBlue());

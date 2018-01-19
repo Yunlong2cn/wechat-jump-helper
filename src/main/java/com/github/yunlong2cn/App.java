@@ -65,7 +65,7 @@ public class App {
                     break;
                 } else {
                     for (int x = colors.length - 1; x >= 0; x--) {
-                        double sim = ImageHelper.sim(pieceColor, colors[x][y]);
+                        double sim = ImageHelper.distance(pieceColor, colors[x][y]);
                         int distance = Math.abs(pieceCenter.getX() - x);// 从 x 坐标看距离棋子的长度
                         if(sim < 1 && distance > 50) {
                             pieceCenter.setY(y - 9);
@@ -107,7 +107,7 @@ public class App {
                 for (int x = 0; x < colors.length; x++) {
                     Color color = colors[x][y];
                     if (!color.equals(backColor)) {
-                        double sim = ImageHelper.sim(color, backColor);
+                        double sim = ImageHelper.distance(color, backColor);
                         if(sim > 30) {// 说明当前像素可能是我想要的位置
                             if(blockStart.getX() == 0 && blockStart.getY() == 0) {// 说明色块开始位置
                                 blockStart.setX(x);
