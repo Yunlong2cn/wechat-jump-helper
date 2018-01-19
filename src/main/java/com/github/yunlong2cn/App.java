@@ -25,7 +25,18 @@ public class App {
 
         String path = args[0];
 
+        System.out.println("[+] Game start");
+
         while (isJump) {
+
+            // 随机等待几秒钟，增加真实性
+            Random random = new Random();
+            int second = random.nextInt(6);
+            second = second < 1 ? 1 : second;
+            System.out.println("++++++++");
+            System.out.println("[+] Wait for "+ second +" senconds");
+            Thread.sleep(second * 1000);
+
             String cmd = "adb shell screencap /sdcard/jump.png";
             int exitCode = -1;
             process = runtime.exec(cmd);
@@ -159,12 +170,6 @@ public class App {
             if(process.waitFor() == 0) {
                 System.out.println("[+] press success");
             }
-
-            Random random = new Random();
-            int second = random.nextInt(6);
-            second = second < 3 ? 3 : second;
-            System.out.println("[+] wait for "+ second +" senconds");
-            Thread.sleep(second * 1000);
         }
 
         System.out.println("[+] Quit");
