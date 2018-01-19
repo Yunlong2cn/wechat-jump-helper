@@ -160,8 +160,8 @@ public class App {
             }
 
             Random random = new Random();
-            int second = random.nextInt(5);
-            second = second < 2 ? 2 : second;
+            int second = random.nextInt(6);
+            second = second < 3 ? 3 : second;
             System.out.println("[+] wait for "+ second +" senconds");
             Thread.sleep(second * 1000);
         }
