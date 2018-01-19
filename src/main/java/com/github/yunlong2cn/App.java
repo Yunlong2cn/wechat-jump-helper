@@ -66,8 +66,7 @@ public class App {
                 } else {
                     for (int x = colors.length - 1; x >= 0; x--) {
                         double sim = ImageHelper.distance(pieceColor, colors[x][y]);
-                        int distance = Math.abs(pieceCenter.getX() - x);// 从 x 坐标看距离棋子的长度
-                        if(sim < 1 && distance > 50) {
+                        if(sim < 1) {
                             pieceCenter.setY(y - 9);
                             pieceCenter.setX(x - 21);
                             break;
@@ -121,10 +120,12 @@ public class App {
                             } else {
                                 if(color.equals(blockStart.getColor())) {// 如果当前 color 与 start 位置的 color 相同，说明是 left 的起始位置
                                     int yDistance = y - blockLeft.getY();// 当前颜色值的 y 坐标与上一次定义为左侧位置的 y 坐标的距离
+                                    int xDistance = Math.abs(pieceCenter.getX() - x);// 从 x 坐标看距离棋子的长度
                                     // 认为：当 yDistance < 阈值时，则是同一个色块
+                                    // 认为：当 xDistance 小于阈值时，可能取到的 x 坐标为棋子的坐标
                                     // 认为：上一次保存位置 x 坐标应大于或等于当前位置 x 坐标
                                     // 认为：上一次保存位置 y 坐标应小于当前位置 y 坐标
-                                    if(blockLeft.getX() >= x && blockLeft.getY() < y && yDistance < 200) {// 上一次保存的 left 位置如果小于这次的 x 位置，则说明 left 并未取到最左侧
+                                    if(blockLeft.getX() >= x && blockLeft.getY() < y && yDistance < 200 && xDistance > 50) {// 上一次保存的 left 位置如果小于这次的 x 位置，则说明 left 并未取到最左侧
                                         blockLeft.setX(x);
                                         blockLeft.setY(y);
 
