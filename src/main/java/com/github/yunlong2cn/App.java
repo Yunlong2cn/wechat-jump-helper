@@ -13,16 +13,30 @@ public class App {
             return;
         }
         Runtime runtime = Runtime.getRuntime();
+        Process process;
 
         boolean isJump = true;
 
         String path = args[0];
 
         while (isJump) {
-            runtime.exec("adb shell screencap /sdcard/jump.png");
-            Thread.sleep(2000);
-            runtime.exec("adb pull /sdcard/jump.png " + path);
-            Thread.sleep(3000);
+            String cmd = "adb shell screencap /sdcard/jump.png";
+            int exitCode = -1;
+            process = runtime.exec(cmd);
+            exitCode = process.waitFor();
+            if(exitCode != 0) {
+                System.out.println("[-] jump.png generate failed");
+                isJump = false;
+                return;
+            }
+            cmd = "adb pull /sdcard/jump.png " + path;
+            process = runtime.exec(cmd);
+            exitCode = process.waitFor();
+            if(exitCode != 0) {
+                System.out.println("[-] jump.png pulled failed");
+            }
+
+            isJump = false;
 
             Color[][] colors = ImageHelper.toColors(path + "/" + "jump.png");
 
@@ -104,10 +118,13 @@ public class App {
             double time = distance * 1.4;
             System.out.println("[+] press time = " + time);
 
-            runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time);
+            process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time);
+            if(process.waitFor() == 0) {
+                System.out.println("[+] press success");
+            }
 
             Random random = new Random();
-            int second = random.nextInt(5) + 2;
+            int second = random.nextInt(5);
             System.out.println("[+] wait for "+ second +" senconds");
             Thread.sleep(second * 1000);
 
