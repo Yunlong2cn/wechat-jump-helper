@@ -7,7 +7,7 @@
 // java -jar wechat-jump-helper-[version].jar [path] [-auto-restart]
 // 如下：
 java -jar wechat-jump-helper-1.0.1.jar .
-如需游戏结束后自动重启，执行如下命令(最后一个参数随意，你喜欢就好)：
+// 如需游戏结束后自动重启，执行如下命令(最后一个参数随意，你喜欢就好)：
 java -jar wechat-jump-helper-1.0.1.jar . true
 ```
 
