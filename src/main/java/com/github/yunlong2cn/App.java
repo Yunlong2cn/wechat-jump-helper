@@ -17,6 +17,12 @@ public class App {
 
         boolean isJump = true;
 
+        boolean isAutoRestart = false;
+
+        if(args.length == 2) {
+            isAutoRestart = true;
+        }
+
         String path = args[0];
 
         while (isJump) {
@@ -74,12 +80,17 @@ public class App {
 
             if(pieceCenter.getX() == 0 || pieceCenter.getY() == 0) {
                 System.out.println("[-] Have no piece on dashboard");
-                cmd = "adb shell input tap 555 1575";
-                if(runtime.exec(cmd).waitFor() == 0) {
-                    System.out.println("[+] Restart Game success");
+                if(isAutoRestart) {
+                    cmd = "adb shell input tap 555 1575";
+                    if(runtime.exec(cmd).waitFor() == 0) {
+                        System.out.println("[+] Restart Game success");
+                    } else {
+                        System.out.println("[-] Restart Game failed");
+                    }
                 } else {
-                    System.out.println("[-] Restart Game failed");
+                    isJump = false;
                 }
+
                 continue;
             }
 
