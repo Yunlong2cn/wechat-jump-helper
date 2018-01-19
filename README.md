@@ -1,6 +1,17 @@
 # wechat-jump-helper
 一款JAVA版开源的微信跳一跳小程序辅助工具
 
+## 使用
+直接在 release 中下载最新版本，并确保您有 java 环境，adb 环境，通过命令执行即可
+```
+// java -jar wechat-jump-helper-[version].jar [path]
+// 如下：
+java -jar wechat-jump-helper-1.0.0.jar .
+```
+
+## 源码编译
+克隆项目到本地，本项目采用 gradle 构建，请确保您有 gradle 环境，然后切换到项目目录，执行 gradle build 即可
+
 ## 难点
 
 * 1、获取棋子中心点坐标
