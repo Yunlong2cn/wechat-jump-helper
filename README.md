@@ -4,9 +4,11 @@
 ## 使用
 直接在 release 中下载最新版本，并确保您有 java 环境，adb 环境，通过命令执行即可
 ```
-// java -jar wechat-jump-helper-[version].jar [path]
+// java -jar wechat-jump-helper-[version].jar [path] [-auto-restart]
 // 如下：
-java -jar wechat-jump-helper-1.0.0.jar .
+java -jar wechat-jump-helper-1.0.1.jar .
+如需游戏结束后自动重启，执行如下命令(最后一个参数随意，你喜欢就好)：
+java -jar wechat-jump-helper-1.0.1.jar . true
 ```
 
 ## 源码编译
@@ -24,3 +26,7 @@ java -jar wechat-jump-helper-1.0.0.jar .
 > 获取色块坐标流程
 
 ![image](https://github.com/Yunlong2cn/wechat-jump-helper/blob/master/assets/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%EF%BC%8C%E6%89%BE%E8%89%B2%E5%9D%97%E4%B8%AD%E5%BF%83%E7%82%B9.png)
+
+## 联系
+
+QQ群：104725817 （请备注来源：Github）
