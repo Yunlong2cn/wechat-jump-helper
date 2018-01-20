@@ -106,56 +106,44 @@ public class App {
                 continue;
             }
 
-
-
-
-
             Position blockStart = new Position(); // 色块起始位置
-            Position blockLeft = new Position(); // 色块左侧位置
+            Position blockRight = new Position(); // 色块右侧位置
 
             // 计算色块中心坐标
-            // 从上往下，从左往右
+            // 从上往下，从右往左（避免阴影干扰）
             for (int y = 288; y < colors[0].length; y++) {
-                for (int x = 0; x < colors.length; x++) {
+                // 防止跨色块
+                if(blockRight.getY() > 0 && y - blockRight.getY() > 80) {
+                    break;
+                }
+                for (int x = colors.length - 1; x >= 0; x--) {
                     Color color = colors[x][y];
-                    if (!color.equals(backColor)) {
-                        double sim = ImageHelper.distance(color, backColor);
-                        if(sim > 30) {// 说明当前像素可能是我想要的位置
-                            if(blockStart.getX() == 0 && blockStart.getY() == 0) {// 说明色块开始位置
-                                blockStart.setX(x);
-                                blockStart.setY(y);
-                                blockStart.setColor(color);
+                    double distance = ImageHelper.distance(color, backColor);// 取得当前颜色值与画面颜色的距离
 
-                                blockLeft.setX(x);
-                                blockLeft.setY(y);
+                    if(blockStart.getX() == 0) {
+                        if(distance > 30 && Math.abs(x - pieceCenter.getX()) > 80) {// 距离大于 30，说明颜色变化明显且距离棋子的位置较远，则有可能为想要获得的位置
+                            // 开始位置
+                            blockStart.setX(x);
+                            blockStart.setY(y);
+                            blockStart.setColor(color);
 
-                                break;// 一旦在当前行发现了想要的位置，则记录后跳出并进行下一行处理
-                            } else {
-                                if(color.equals(blockStart.getColor())) {// 如果当前 color 与 start 位置的 color 相同，说明是 left 的起始位置
-                                    int yDistance = y - blockLeft.getY();// 当前颜色值的 y 坐标与上一次定义为左侧位置的 y 坐标的距离
-                                    int xDistance = Math.abs(pieceCenter.getX() - x);// 从 x 坐标看距离棋子的长度
-                                    // 认为：当 yDistance < 阈值时，则是同一个色块
-                                    // 认为：当 xDistance 小于阈值时，可能取到的 x 坐标为棋子的坐标
-                                    // 认为：上一次保存位置 x 坐标应大于或等于当前位置 x 坐标
-                                    // 认为：上一次保存位置 y 坐标应小于当前位置 y 坐标
-                                    if(blockLeft.getX() >= x && blockLeft.getY() < y && yDistance < 200 && xDistance > 50) {// 上一次保存的 left 位置如果小于这次的 x 位置，则说明 left 并未取到最左侧
-                                        blockLeft.setX(x);
-                                        blockLeft.setY(y);
+                            // 认定的右侧位置
+                            blockRight.setX(x);
+                            blockRight.setY(y);
+                            blockRight.setColor(color);
 
-                                        break;// 一旦在当前行发现了想要的位置，则记录后跳出并进行下一行处理
-                                    }
-                                }
-                            }
-
-
+                            break;
                         }
-
+                    } else if(x > blockRight.getX() && ImageHelper.distance(blockRight.getColor(), color) < 10) {// 取到的右侧位置与当前位置距离较近且当前位置大于上次取到的右侧坐标x值，则重置右侧坐标
+                        blockRight.setX(x);
+                        blockRight.setY(y);
+                        break;
                     }
                 }
             }
 
             Position blockCenter = new Position();
-            blockCenter.setY(blockLeft.getY());
+            blockCenter.setY(blockRight.getY());
             blockCenter.setX(blockStart.getX());
 
 
@@ -165,7 +153,7 @@ public class App {
             int y = Math.abs(pieceCenter.getY() - blockCenter.getY());
             double distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
-            double time = distance * 1.4;
+            double time = distance * 1.38;
             System.out.println("[+] press time = " + time);
 
             process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time);
