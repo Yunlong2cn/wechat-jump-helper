@@ -67,21 +67,23 @@ public class App {
 
 
             // 计算棋子坐标
-            // 自下往上，自右往左（因为棋子是分开的，自下往上能快速定位到棋子底部，自右往左，是为了避免棋子阴影造成的干扰）
+            // 自右往左，自下往上（因为棋子是分开的，自下往上能快速定位到棋子底部，自右往左，是为了避免棋子阴影造成的干扰）
             // 先计算棋子坐标，再计算色块坐标（由于棋子有可能高于色块位置，所以需要用棋子的 x 坐标来判断色块坐标的正确性）
+            Color expectPieceColor = new Color(60, 56, 83); // 期望边界颜色
             Position pieceCenter = new Position();
-            Color pieceColor = new Color(57,57,99); // 认为棋子的RGB颜色值应为 pieceColor
-            for (int y = colors[0].length - 1; y >= 0; y--) {
+            for (int x = colors.length - 1; x >= 0; x--) {
                 if(pieceCenter.getX() > 0) {
                     break;
-                } else {
-                    for (int x = colors.length - 1; x >= 0; x--) {
-                        double sim = ImageHelper.distance(pieceColor, colors[x][y]);
-                        if(sim < 1) {
-                            pieceCenter.setY(y - 9);
-                            pieceCenter.setX(x - 21);
-                            break;
-                        }
+                }
+                for (int y = colors[0].length - 1; y >= 0; y--) {
+                    if(pieceCenter.getX() > 0) {
+                        break;
+                    }
+                    Color color = colors[x][y];
+                    if(ImageHelper.distance(color, expectPieceColor) < 15) {
+                        pieceCenter.setX(x - 38);
+                        pieceCenter.setY(y);
+                        pieceCenter.setColor(color);
                     }
                 }
             }
