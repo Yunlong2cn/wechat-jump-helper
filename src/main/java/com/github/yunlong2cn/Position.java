@@ -2,10 +2,26 @@ package com.github.yunlong2cn;
 
 import java.awt.*;
 
+/**
+ * 坐标点对象
+ *
+ * @param x 横坐标
+ * @param y 纵坐标
+ * @param color RGB 颜色值
+ *
+ */
 public class Position {
     private int x;
     private int y;
     private Color color;
+
+    public Position() {}
+
+    public Position(int x, int y, Color color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+    }
 
 
     public int getX() {
