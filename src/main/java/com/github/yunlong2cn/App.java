@@ -153,8 +153,14 @@ public class App {
             int y = Math.abs(pieceCenter.getY() - blockCenter.getY());
             double distance = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 
-            double time = distance * 1.38;
-            System.out.println("[+] press time = " + time);
+            // 按压时长 time 有两种算法
+            // 1. 根据跳跃距离 * 系数
+            double time = distance * 1.38; // 需要根据分辨率确定系数
+            // 2. 根据跳跃宽度
+            int totalTime = 1700; //跳过整个屏幕宽度所需时长
+            int distanceX = Math.abs(blockCenter.getX() - pieceCenter.getX());
+            time = Math.round((float)distanceX/colors.length * totalTime);// 此方法计算结果可无视分辨率
+            System.out.println(String.format("[+] Distance: %s/%s press time = %s", distanceX, colors.length, time));
 
             process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time);
             if(process.waitFor() == 0) {
