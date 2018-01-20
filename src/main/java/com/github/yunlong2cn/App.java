@@ -31,7 +31,7 @@ public class App {
 
             // 随机等待几秒钟，增加真实性
             Random random = new Random();
-            int second = random.nextInt(6);
+            int second = random.nextInt(3);
             second = second < 1 ? 1 : second;
             System.out.println("++++++++");
             System.out.println("[+] Wait for "+ second +" senconds");
@@ -155,14 +155,16 @@ public class App {
 
             // 按压时长 time 有两种算法
             // 1. 根据跳跃距离 * 系数
-            double time = distance * 1.38; // 需要根据分辨率确定系数
+            double time1 = distance * 1.38; // 需要根据分辨率确定系数
             // 2. 根据跳跃宽度
             int totalTime = 1700; //跳过整个屏幕宽度所需时长
             int distanceX = Math.abs(blockCenter.getX() - pieceCenter.getX());
-            time = Math.round((float)distanceX/colors.length * totalTime);// 此方法计算结果可无视分辨率
-            System.out.println(String.format("[+] Distance: %s/%s press time = %s", distanceX, colors.length, time));
+            double time2 = Math.round((float)distanceX/colors.length * totalTime);// 此方法计算结果可无视分辨率
+            System.out.println(String.format("[+] Distance: %s/%s press time1 = %s, time2 = %s", distanceX, colors.length, time1, time2));
 
-            process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time);
+            // 选择一种试即可
+            process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time1);
+            // process = runtime.exec("adb shell input swipe 10 10 11 11 " + (int)time2);
             if(process.waitFor() == 0) {
                 System.out.println("[+] press success");
             }
