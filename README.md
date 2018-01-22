@@ -27,6 +27,9 @@ java -jar wechat-jump-helper-1.0.1.jar . true
 
 ![image](assets/%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%EF%BC%8C%E6%89%BE%E8%89%B2%E5%9D%97%E4%B8%AD%E5%BF%83%E7%82%B9.png)
 
+## 相关文章
+[WIFI 环境下通过 adb 调试安卓程序](https://github.com/Yunlong2cn/wechat-jump-helper/wiki/WIFI-%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%B0%83%E8%AF%95%E5%AE%89%E5%8D%93%E7%A8%8B%E5%BA%8F)
+
 ## 联系
 
 QQ群：104725817 （请备注来源：Github）
